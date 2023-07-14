@@ -10,6 +10,7 @@ function TaskList() {
 
    return (
       <div className={cls.wrapper}>
+         {taskList.length === 0 && <h2 className={cls.fallback}>No Task to show! Please add some task...</h2>}
          <Grid container spacing={2}>
             {taskList.map(task => (
                <Grid key={task.id} item xl={3} lg={4} md={6}>
@@ -32,7 +33,6 @@ function TaskList() {
                </Card>
             </Grid>
          </Grid>
-         {taskList.length === 0 && <h2 className={cls.fallback}>No Task to show! Please add some task...</h2>}
       </div>
    );
 }
