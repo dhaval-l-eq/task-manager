@@ -1,3 +1,4 @@
+import Card from '../../../Layout/Card';
 import { RootState } from '../../../store';
 import Task from '../task-item/Task';
 import cls from './TaskList.module.css';
@@ -23,7 +24,15 @@ function TaskList() {
                   />
                </Grid>
             ))}
+            <Grid item xl={3} lg={4} md={6}>
+               <Card>
+                  <div className={cls.addTask}>
+                     <h2>Add Task</h2>
+                  </div>
+               </Card>
+            </Grid>
          </Grid>
+         {taskList.length === 0 && <h2 className={cls.fallback}>No Task to show! Please add some task...</h2>}
       </div>
    );
 }

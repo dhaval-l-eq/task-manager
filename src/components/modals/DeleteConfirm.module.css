@@ -1,0 +1,19 @@
+.title {
+   text-align: center;
+   font-size: 1.8rem;
+   font-weight: 500;
+   margin-bottom: 3rem;
+}
+
+.redText {
+   color: var(--color-secondary-100);
+   font-weight: 600;
+}
+
+.actions {
+   display: flex;
+   width: 60%;
+   margin: auto;
+   justify-content: space-between;
+   align-items: center;
+}
