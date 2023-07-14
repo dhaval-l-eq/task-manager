@@ -1,0 +1,10 @@
+.clock {
+    margin-top: 10rem;
+    display: flex;
+    justify-content: center;
+}
+
+.time {
+    font-size: 4rem;
+    color: var(--color-secondary-200);
+}

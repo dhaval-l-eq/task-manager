@@ -1,0 +1,10 @@
+.menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    background-color: var(--bg-secondary-faded);
+    padding: 2rem;
+    padding-top: 10rem;
+    min-width: 25rem;
+}

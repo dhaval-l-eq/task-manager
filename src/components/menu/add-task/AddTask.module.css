@@ -1,0 +1,8 @@
+.inMenu {
+    margin-bottom: 2rem;
+}
+
+.inMenu .addTaskBtn {
+    font-size: 1.8rem;
+    font-weight: 400;
+}

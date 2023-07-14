@@ -1,0 +1,58 @@
+.task {
+   background-color: var(--color-light);
+   padding: 2rem;
+   display: flex;
+   flex-direction: column;
+}
+
+.n2 {
+    background-color: var(--bg-secondary-faded);
+}
+
+.n3 {
+    background-color: var(--color-primary-200);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.expandBtnRotate {
+    rotate: 180deg;
+}
+
+.task h3 {
+   font-size: 2rem;
+}
+
+.desc {
+   font-size: 1.5rem;
+   color: var(--text-dark);
+   font-weight: 400;
+   margin-bottom: 2rem;
+}
+
+.info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.date {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.actionsWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.actions {
+    display: flex;
+}

@@ -1,0 +1,15 @@
+.filter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.filter li {
+    width: 100%;
+}
+
+.filter .btn {
+    font-size: 1.5rem;
+    font-weight: 400;
+}

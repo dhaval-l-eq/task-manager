@@ -1,0 +1,49 @@
+.navbarWrapper {
+   position: fixed;
+   top: 0;
+   width: 100%;
+   z-index: 20;
+   background-color: var(--bg-primary);
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.123);
+}
+
+.navbar {
+   max-width: 1550px;
+   margin: auto;
+   display: flex;
+   justify-content: space-between;
+   padding: 2rem 4rem;
+}
+
+.logo {
+   display: flex;
+   align-items: center;
+   gap: 5px;
+}
+
+.logo p {
+   font-size: 2rem;
+   font-weight: 300;
+}
+
+.logoWrapper {
+   width: 4rem;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-size: 2rem;
+}
+
+.menu h2 {
+   font-weight: 300;
+}
+
+.user {
+    border-radius: 50%;
+    padding: 3px;
+    box-shadow: 0 2px 5px #00000021;
+    display: flex;
+}
