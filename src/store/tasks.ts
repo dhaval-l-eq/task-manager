@@ -1,40 +1,58 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Task } from "../interfaces/task";
+import { Color, Task } from "../interfaces/task";
 
-const taskList: Task[] = [
+const dummyTaskList: Task[] = [
     {
         id: 't1',
         title: 'Learn React',
         description: 'lorem isklj react is a popular front end lakds ksjdilfejfla laksdjflisaejfl  djsflkldf jklfjjkdjflaks djfjskdf',
-        dateCreated: new Date(),
+        dateCreated: new Date().toISOString(),
         imp: true,
-        complete: false
+        complete: false,
+        color: Color.C1,
     },
     {
         id: 't2',
         title: 'Learn Angular',
         description: 'lorem isklj react is a popular front end lakds ksjdilfejfla laksdjflisaejfl  djsflkldf jklfjjkdjflaks djfjskdf',
-        dateCreated: new Date('23/4/2022'),
+        dateCreated: new Date(2022,5,25).toISOString(),
         imp: false,
-        complete: false
+        complete: false,
+        color: Color.C2,
     },
     {
         id: 't3',
         title: 'Learn Vue',
         description: 'lorem isklj react is a popular front end lakds ksjdilfejfla laksdjflisaejfl  djsflkldf jklfjjkdjflaks djfjskdf',
-        dateCreated: new Date('23/5/2021'),
+        dateCreated: new Date(2020,2,12).toISOString(),
         imp: true,
-        complete: false
+        complete: false,
+        color: Color.C3,
     },
-]
+];
+
+function findTask(taskList: Task[], id: any): Task {
+    return taskList.find(task => task.id === id)!;
+}
 
 const taskSlice = createSlice({
     name: 'task',
     initialState: {
-        taskList
+        taskList: dummyTaskList
     },
     reducers: {
-
+        toggleCompleteState(state, {payload: taskId}) {
+            const taskToModify = findTask(state.taskList,taskId);
+            taskToModify.complete = !taskToModify.complete;
+        },
+        toggleImpState(state, {payload: taskId}) {
+            const taskToModify = findTask(state.taskList,taskId);
+            taskToModify.imp = !taskToModify.imp;
+        },
+        deleteTask(state, {payload: taskId}) {
+            const taskIdx = state.taskList.findIndex(task => task.id === taskId);
+            state.taskList.splice(taskIdx, 1);
+        }
     }
 })
 

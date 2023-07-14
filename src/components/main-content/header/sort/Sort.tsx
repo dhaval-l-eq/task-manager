@@ -11,7 +11,6 @@ function Sort() {
       const el = e.target;
       const sortText = el.value as Sort;
       setSortParam(sortText);
-      console.log(sortText);
    }
 
    return (

@@ -5,11 +5,11 @@
    flex-direction: column;
 }
 
-.n2 {
+.c2 {
     background-color: var(--bg-secondary-faded);
 }
 
-.n3 {
+.c3 {
     background-color: var(--color-primary-200);
 }
 
@@ -55,4 +55,16 @@
 
 .actions {
     display: flex;
+}
+
+.badgePending:hover {
+    background-color: var(--color-secondary-200) !important;
+}
+
+.badgeComplete:hover {
+    background-color: var(--color-green) !important;
+}
+
+.badgeComplete:active, .badgePending:active {
+    box-shadow: none !important;
 }

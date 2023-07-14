@@ -1,13 +1,27 @@
+import { Key } from 'react';
+
+export enum Color {
+   C1 = 'aqua',
+   C2 = 'pink',
+   C3 = 'purple'
+}
+
 export interface TaskProp {
-   n2?: Boolean;
-   n3?: Boolean;
+   title: String;
+   description?: String;
+   imp: Boolean;
+   complete: Boolean;
+   dateCreated: string;
+   id: Key;
+   color?: Color;
 }
 
 export interface Task {
-    id: String;
-    title: String;
-    description?: String;
-    imp: Boolean;
-    complete: Boolean;
-    dateCreated: Date;
+   id: Key;
+   title: String;
+   description?: String;
+   imp: Boolean;
+   complete: Boolean;
+   dateCreated: string;
+   color?: Color;
 }
