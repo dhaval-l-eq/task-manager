@@ -14,7 +14,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useDispatch } from 'react-redux';
 import { taskActions } from '../../../store/tasks';
-import DeleteConfirm from '../../modals/DeleteConfirm';
+import DeleteConfirm from '../../task-actions/DeleteConfirm';
 
 function Task(props: PropsWithChildren<TaskProp>) {
    const taskClasses = `${cls.task} ${props.color === Color.C2 && cls.c2} ${props.color === Color.C3 && cls.c3}`;
@@ -34,12 +34,12 @@ function Task(props: PropsWithChildren<TaskProp>) {
 
    const deleteHandler = () => {
       setDelConfimVisible(false);
-      dispatch(taskActions.deleteTask(props.id));
+      setTimeout(() => dispatch(taskActions.deleteTask(props.id)), 200);
    }
 
    return (
       <>
-         {delConfimVisible && <DeleteConfirm isVisible={delConfimVisible} onHide={hideDelConfirm} onConfirm={deleteHandler} />}
+         <DeleteConfirm isVisible={delConfimVisible} onHide={hideDelConfirm} onConfirm={deleteHandler} />
          <Card>
             <div className={taskClasses}>
                <div className={cls.header}>
@@ -67,7 +67,7 @@ function Task(props: PropsWithChildren<TaskProp>) {
                         sx={{ fontSize: 12, fontFamily: 'inherit', fontWeight: 400, marginBottom: 0.6 }}
                      />
                      <div className={cls.actions}>
-                        <IconButton onClick={toggleTaskImp} title="toggle favorite" sx={{ padding: 0.6 }}>
+                        <IconButton onClick={toggleTaskImp} title="toggle important" sx={{ padding: 0.6 }}>
                            {props.imp ? (
                               <StarRateRoundedIcon color="secondary" sx={{ fontSize: 25 }} />
                            ) : (

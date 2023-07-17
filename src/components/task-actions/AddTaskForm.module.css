@@ -1,0 +1,163 @@
+.form {
+    width: 600px;
+    padding: 1rem 1rem;
+    color: var(--text-dark);
+}
+
+.formControl {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.6rem;
+}
+
+.formControl label {
+    margin-bottom: 5px;
+    font-size: 1.4rem;
+}
+
+.formControl input, .formControl textarea {
+    font: inherit;
+    border: 1px solid var(--text-light);
+    border-radius: 5px;
+    padding: 1rem;
+    outline: none;
+    font-weight: 400;
+}
+
+.formControl input::placeholder, .formControl textarea::placeholder {
+    font-weight: 300;
+    font-size: 1.3rem;
+}
+
+.formControl textarea {
+    height: 10rem;
+    resize: vertical;
+}
+
+.formControl input:focus, .formControl textarea:focus {
+    border: 1px solid var(--text-primary);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.185);
+}
+
+.formControl .error {
+  border-color: var(--color-secondary-100);
+}
+
+.formControlRow {
+  flex-direction: row;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.formGroup {
+  display: flex;
+  gap: 1rem;
+}
+
+.formControl h3 {
+  margin-bottom: 5px;
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+
+.formGroup label {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.formGroup .aqua {
+  background-color: var(--color-light);
+}
+.formGroup .pink {
+  background-color: var(--bg-secondary-faded);
+}
+.formGroup .purple {
+  background-color: var(--color-primary-200);
+}
+
+.colorSelected {
+  border: 1px solid black;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50%;
+    margin: auto;
+    margin-top: 3rem;
+}
+
+.switch {
+    --line: #505162;
+    --dot: var(--color-primary-100);
+    --circle: var(--text-light);
+    --duration: .3s;
+    --text: var(--text-light);
+    cursor: pointer;
+  }
+  .switch input {
+    display: none;
+  }
+  .switch input + div {
+    position: relative;
+  }
+  .switch input + div:before, .switch input + div:after {
+    --s: 1;
+    content: "";
+    position: absolute;
+    height: 4px;
+    top: 10px;
+    width: 24px;
+    background: var(--line);
+    transform: scaleX(var(--s));
+    transition: transform var(--duration) ease;
+  }
+  .switch input + div:before {
+    --s: 0;
+    left: 0;
+    transform-origin: 0 50%;
+    border-radius: 2px 0 0 2px;
+  }
+  .switch input + div:after {
+    left: 28px;
+    transform-origin: 100% 50%;
+    border-radius: 0 2px 2px 0;
+  }
+  .switch input + div span {
+    padding-left: 56px;
+    line-height: 24px;
+    color: var(--text);
+  }
+  .switch input + div span:before {
+    --x: 0;
+    --b: var(--circle);
+    --s: 4px;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 var(--s) var(--b);
+    transform: translateX(var(--x));
+    transition: box-shadow var(--duration) ease, transform var(--duration) ease;
+  }
+  .switch input + div span:not(:empty) {
+    padding-left: 64px;
+  }
+  .switch input:checked + div:before {
+    --s: 1;
+  }
+  .switch input:checked + div:after {
+    --s: 0;
+  }
+  .switch input:checked + div span:before {
+    --x: 28px;
+    --s: 12px;
+    --b: var(--dot);
+  }

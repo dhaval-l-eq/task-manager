@@ -20,7 +20,3 @@
 .addTask h2 {
     font-weight: 300;
 }
-
-.addTask:active {
-    transform: translateY(1px);
-}

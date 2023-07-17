@@ -11,7 +11,7 @@ export interface TaskProp {
    description?: String;
    imp: Boolean;
    complete: Boolean;
-   dateCreated: string;
+   dateCreated: string | number;
    id: Key;
    color?: Color;
 }
@@ -22,6 +22,6 @@ export interface Task {
    description?: String;
    imp: Boolean;
    complete: Boolean;
-   dateCreated: string;
+   dateCreated: string | number;
    color?: Color;
 }

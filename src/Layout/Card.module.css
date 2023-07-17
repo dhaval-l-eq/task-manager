@@ -8,3 +8,8 @@
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.205);
     transform: translateY(2px);
 }
+
+.btn:active {
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.205);
+    transform: translateY(1px);
+}

@@ -42,7 +42,6 @@ const taskSlice = createSlice({
    name: 'task',
    initialState: {
       taskList: dummyTaskList,
-      taskDelConfirmVisible: false,
    },
    reducers: {
       toggleCompleteState(state, { payload: taskId }) {
@@ -57,12 +56,9 @@ const taskSlice = createSlice({
          const taskIdx = state.taskList.findIndex(task => task.id === taskId);
          state.taskList.splice(taskIdx, 1);
       },
-      showTaskDelConfirm(state) {
-         state.taskDelConfirmVisible = true;
-      },
-      hideTaskDelConfirm(state) {
-         state.taskDelConfirmVisible = false;
-      },
+      addTask(state, {payload}) {
+         state.taskList.push(payload);
+      }
    },
 });
 

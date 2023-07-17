@@ -3,15 +3,10 @@ import Box from '../../Layout/Box';
 import Modal from '../../Layout/Modal';
 import cls from './DeleteConfirm.module.css';
 import buttonStyles from '../../mui-customization/buttonStyles';
-import { EventHandler, PropsWithChildren, SyntheticEvent } from 'react';
+import { PropsWithChildren} from 'react';
+import { ModalProps } from '../../interfaces/props';
 
-interface DelConfProp {
-   onHide: EventHandler<SyntheticEvent>;
-   onConfirm: EventHandler<SyntheticEvent>;
-   isVisible: boolean;
-}
-
-function DeleteConfirm(props: PropsWithChildren<DelConfProp>) {
+function DeleteConfirm(props: PropsWithChildren<ModalProps>) {
    return (
       <Modal isVisible={props.isVisible} onHide={props.onHide}>
          <Box>

@@ -1,11 +1,11 @@
 import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import { useState } from 'react';
+import inputStyles from '../../../../mui-customization/inputStyles';
 
 function Sort() {
    type Sort = '' | 'imp' | 'time-asc' | 'time-dsc';
 
    const [sortParam, setSortParam] = useState<Sort>('');
-   const selectStyles = { fontSize: 15, fontFamily: 'inherit', fontWeight: 500 };
 
    function handleChange(e: SelectChangeEvent) {
       const el = e.target;
@@ -14,21 +14,21 @@ function Sort() {
    }
 
    return (
-      <FormControl color="warning" sx={{ minWidth: 300 }}>
-         <InputLabel sx={selectStyles} id="sort">
+      <FormControl size='small' color="warning" sx={{ minWidth: 300 }}>
+         <InputLabel sx={inputStyles} id="sort">
             Sort by
          </InputLabel>
-         <Select sx={selectStyles} labelId="sort" value={sortParam} id="sort-input" label="Sort by" onChange={handleChange}>
-            <MenuItem sx={selectStyles} value="">
+         <Select sx={inputStyles} labelId="sort" value={sortParam} id="sort-input" label="Sort by" onChange={handleChange}>
+            <MenuItem sx={inputStyles} value="">
                None
             </MenuItem>
-            <MenuItem sx={selectStyles} value="imp">
+            <MenuItem sx={inputStyles} value="imp">
                Importance
             </MenuItem>
-            <MenuItem sx={selectStyles} value="time-asc">
+            <MenuItem sx={inputStyles} value="time-asc">
                Time created (Ascending)
             </MenuItem>
-            <MenuItem sx={selectStyles} value="time-dsc">
+            <MenuItem sx={inputStyles} value="time-dsc">
                Time created (Descending)
             </MenuItem>
          </Select>
