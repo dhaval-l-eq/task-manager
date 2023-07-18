@@ -66,6 +66,7 @@
   height: 40px;
   border-radius: 50%;
   cursor: pointer;
+  margin-bottom: 0;
 }
 
 .formGroup .aqua {
@@ -79,7 +80,8 @@
 }
 
 .colorSelected {
-  border: 1px solid black;
+  outline: 1px solid var(--text-light);
+  outline-offset: 2px;
 }
 
 .actions {

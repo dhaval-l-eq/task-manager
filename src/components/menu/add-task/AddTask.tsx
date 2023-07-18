@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import buttonStyles from '../../../mui-customization/buttonStyles';
 import cls from './AddTask.module.css';
 import { useState } from 'react';
-import AddTaskForm from '../../task-actions/AddTaskForm';
+import TaskForm from '../../task-actions/TaskForm';
 
 function AddTask() {
    const [addTaskVisible, setAddTaskVisible] = useState(false);
@@ -26,7 +26,7 @@ function AddTask() {
                Add Task
             </Button>
          </div>
-         <AddTaskForm isVisible={addTaskVisible} onHide={hideAddTask} />
+         <TaskForm isVisible={addTaskVisible} onHide={hideAddTask} />
       </>
    );
 }

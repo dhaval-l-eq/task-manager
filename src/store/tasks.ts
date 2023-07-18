@@ -42,22 +42,65 @@ const taskSlice = createSlice({
    name: 'task',
    initialState: {
       taskList: dummyTaskList,
+      filteredTask: null as null | Task[],
+      stateChanged: false,
    },
    reducers: {
       toggleCompleteState(state, { payload: taskId }) {
          const taskToModify = findTask(state.taskList, taskId);
          taskToModify.complete = !taskToModify.complete;
+         state.stateChanged = true;
+
+         // if (state.filteredTask) {
+         //    const taskToModify = findTask(state.filteredTask, taskId);
+         //    taskToModify.complete = !taskToModify.complete;
+         // }
       },
       toggleImpState(state, { payload: taskId }) {
          const taskToModify = findTask(state.taskList, taskId);
          taskToModify.imp = !taskToModify.imp;
+         state.stateChanged = true;
+
+         // if (state.filteredTask) {
+         //    const taskToModify = findTask(state.filteredTask, taskId);
+         //    taskToModify.imp = !taskToModify.imp;
+         // }
       },
       deleteTask(state, { payload: taskId }) {
          const taskIdx = state.taskList.findIndex(task => task.id === taskId);
          state.taskList.splice(taskIdx, 1);
+         state.stateChanged = true;
       },
-      addTask(state, {payload}) {
+      addTask(state, { payload }) {
          state.taskList.push(payload);
+         state.stateChanged = true;
+      },
+      editTask(state, { payload }) {
+         const taskToModify = state.taskList.find(task => task.id === payload.taskId)!;
+         taskToModify.title = payload.title;
+         taskToModify.description = payload.description;
+         taskToModify.imp = payload.imp;
+         taskToModify.color = payload.color;
+         state.stateChanged = true;
+      },
+      filterTask(state, { payload }) {
+         switch (payload) {
+            case 'pending':
+               state.filteredTask = state.taskList.filter(task => !task.complete);
+               return;
+            case 'all':
+               state.filteredTask = state.taskList;
+               return;
+            case 'finished':
+               state.filteredTask = state.taskList.filter(task => task.complete);
+               return;
+            case 'important':
+               state.filteredTask = state.taskList.filter(task => task.imp);
+               return;
+         }
+      },
+      resetStateChange(state) {
+         state.stateChanged = false;
       }
    },
 });

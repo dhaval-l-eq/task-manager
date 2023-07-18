@@ -15,12 +15,19 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useDispatch } from 'react-redux';
 import { taskActions } from '../../../store/tasks';
 import DeleteConfirm from '../../task-actions/DeleteConfirm';
+import TaskForm from '../../task-actions/TaskForm';
 
 function Task(props: PropsWithChildren<TaskProp>) {
    const taskClasses = `${cls.task} ${props.color === Color.C2 && cls.c2} ${props.color === Color.C3 && cls.c3}`;
 
    const [descVisible, setDescVisible] = useState(false);
    const toggleDesc = () => setDescVisible(prev => !prev);
+
+   const [taskDeleted, setTaskDeleted] = useState(false);
+
+   const [editTaskVisible, setEditTaskVisible] = useState(false);
+   const hideEditTask = () => setEditTaskVisible(false);
+   const showEditTask = () => setEditTaskVisible(true);
 
    const [delConfimVisible, setDelConfimVisible] = useState(false);
    const showDelConfirm = () => setDelConfimVisible(true);
@@ -34,24 +41,26 @@ function Task(props: PropsWithChildren<TaskProp>) {
 
    const deleteHandler = () => {
       setDelConfimVisible(false);
-      setTimeout(() => dispatch(taskActions.deleteTask(props.id)), 200);
+      setTaskDeleted(true);
+      setTimeout(() => dispatch(taskActions.deleteTask(props.id)), 300);
    }
 
    return (
       <>
+         <TaskForm edit title={props.title} description={props.description} imp={props.imp} color={props.color} id={props.id} isVisible={editTaskVisible} onHide={hideEditTask} />
          <DeleteConfirm isVisible={delConfimVisible} onHide={hideDelConfirm} onConfirm={deleteHandler} />
-         <Card>
+         <Card cardId={props.id} isVisible={!taskDeleted}>
             <div className={taskClasses}>
                <div className={cls.header}>
                   <h3>{props.title}</h3>
-                  <IconButton
+                  {props.description && <IconButton
                      onClick={toggleDesc}
                      className={`${descVisible && cls.expandBtnRotate}`}
                      title="show/hide description"
                      sx={{ padding: 0.6, transition: 'all 0.3s' }}
                   >
                      <ExpandMoreIcon sx={{ fontSize: 25 }} />
-                  </IconButton>
+                  </IconButton>}
                </div>
                <Collapse in={descVisible}>{props.description && <p className={cls.desc}>{props.description}</p>}</Collapse>
                <div className={cls.info}>
@@ -78,7 +87,7 @@ function Task(props: PropsWithChildren<TaskProp>) {
                         <IconButton onClick={showDelConfirm} title="Delete task" sx={{ padding: 0.6 }}>
                            <DeleteIcon sx={{ fontSize: 25 }} />
                         </IconButton>
-                        <IconButton title="Edit task" sx={{ padding: 0.6 }}>
+                        <IconButton onClick={showEditTask} title="Edit task" sx={{ padding: 0.6 }}>
                            <EditIcon sx={{ fontSize: 25 }} />
                         </IconButton>
                      </div>

@@ -7,10 +7,10 @@ export enum Color {
 }
 
 export interface TaskProp {
-   title: String;
-   description?: String;
-   imp: Boolean;
-   complete: Boolean;
+   title: string;
+   description?: string;
+   imp: boolean;
+   complete: boolean;
    dateCreated: string | number;
    id: Key;
    color?: Color;
@@ -18,10 +18,10 @@ export interface TaskProp {
 
 export interface Task {
    id: Key;
-   title: String;
-   description?: String;
-   imp: Boolean;
-   complete: Boolean;
+   title: string;
+   description?: string;
+   imp: boolean;
+   complete: boolean;
    dateCreated: string | number;
    color?: Color;
 }
