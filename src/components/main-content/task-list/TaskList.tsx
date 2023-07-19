@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import { useSelector } from 'react-redux';
 import TaskForm from '../../task-actions/TaskForm';
 import { Task as TaskInterface } from '../../../interfaces/task';
+import { AnimatePresence, motion } from 'framer-motion';
 
 function TaskList() {
    const allTaskList = useSelector((state: RootState) => state.tasks.taskList);

@@ -1,7 +1,7 @@
 import { FormEvent, PropsWithChildren, useRef, useState, FocusEvent, SyntheticEvent, Key, ChangeEvent } from 'react';
 import Box from '../../Layout/Box';
 import Modal from '../../Layout/Modal';
-import cls from './TaskForm.module.css';
+import cls from '../form-css/Form.module.css';
 import { ModalProps } from '../../interfaces/props';
 import { Button, Popper, Typography } from '@mui/material';
 import buttonStyles from '../../mui-customization/buttonStyles';
