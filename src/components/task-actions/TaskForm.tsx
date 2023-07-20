@@ -5,10 +5,12 @@ import cls from '../form-css/Form.module.css';
 import { ModalProps } from '../../interfaces/props';
 import { Button, Popper, Typography } from '@mui/material';
 import buttonStyles from '../../mui-customization/buttonStyles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { taskActions } from '../../store/tasks';
 import { Color, Task } from '../../interfaces/task';
 import {v4 as uuid} from 'uuid';
+import { RootState } from '../../store';
+import { sendTask } from '../../api/task';
 
 interface TaskFormProps extends ModalProps {
    edit?: boolean;
@@ -44,6 +46,9 @@ function TaskForm(props: PropsWithChildren<TaskFormProps>) {
 
    const dispatch = useDispatch();
 
+   const token = useSelector((state: RootState) => state.auth.token);
+   const userId = useSelector((state: RootState) => state.auth.userId);
+
    const [selectedColor, setSelectedColor] = useState(props.color || Color.C1);
    const colorChoice: Color[] = [Color.C1, Color.C2, Color.C3];
 
@@ -53,7 +58,7 @@ function TaskForm(props: PropsWithChildren<TaskFormProps>) {
       setSelectedColor(colorInputEnum);
    }
 
-   function addTaskHandler(e: FormEvent<HTMLFormElement>) {
+   async function addTaskHandler(e: FormEvent<HTMLFormElement>) {
       e.preventDefault();
 
       if (inputTitle && inputTitle.trim().length === 0) {
@@ -71,8 +76,9 @@ function TaskForm(props: PropsWithChildren<TaskFormProps>) {
          }))
       }
       else {
+         let taskId = uuid();
+
          const newTask: Task = {
-            id: uuid(),
             title: inputTitle!,
             description: inputDesc,
             dateCreated: Date.now(),
@@ -80,6 +86,14 @@ function TaskForm(props: PropsWithChildren<TaskFormProps>) {
             complete: false,
             color: selectedColor
          }
+
+         if(token) {
+            const data = await sendTask(newTask, token, userId );
+            taskId = data.name;
+         }
+
+         newTask.id = taskId;
+         console.log(newTask)
 
          dispatch(taskActions.addTask(newTask));
       }

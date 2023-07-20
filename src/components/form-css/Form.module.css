@@ -76,6 +76,18 @@
    color: var(--text-primary);
 }
 
+.authError p {
+   color: var(--color-secondary-100);
+   font-size: 2rem ;
+   font-weight: 300;
+}
+
+.spinner {
+   margin: 3rem 0;
+   display: flex;
+   justify-content: center;
+}
+
 .formControlRow {
    flex-direction: row;
    align-items: center;

@@ -4,11 +4,40 @@ import { Button } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import buttonStyles from '../../mui-customization/buttonStyles';
 import AuthForm from '../auth/AuthForm';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { authActions } from '../../store/auth';
+import { AuthMode } from '../../api/auth';
 
 function Navbar() {
+   const [authFormVisible, setAuthFormVisible] = useState(false);
+   const [authMode, setAuthMode] = useState<AuthMode>('signup');
+
+   const showSignupForm = () => {
+      setAuthMode('signup');
+      setAuthFormVisible(true)
+   };
+
+   const showLoginForm = () => {
+      setAuthMode('signin');
+      setAuthFormVisible(true)
+   };
+
+   const hideAuthForm = () => setAuthFormVisible(false);
+
+   const dispatch = useDispatch();
+
+   const userName = useSelector((state: RootState) => state.auth.userName);
+   const isAuth: boolean = useSelector((state: RootState) => !!state.auth.token);
+
+   function logoutUser() {
+      dispatch(authActions.logoutUser());
+   }
+
    return (
       <>
-         <AuthForm isVisible onHide={() => {}} />
+         <AuthForm mode={authMode} isVisible={authFormVisible} onHide={hideAuthForm} />
          <div className={cls.navbarWrapper}>
             <nav className={cls.navbar}>
                <div className={cls.logo}>
@@ -22,18 +51,26 @@ function Navbar() {
                      <PersonIcon sx={{ fontSize: 30 }} color="info" />
                   </li>
                   <li>
-                     <h2>Hi, Guest!</h2>
+                     <h2>Hi, {userName.length > 0 ? userName : 'Guest'}!</h2>
                   </li>
-                  <li>
-                     <Button sx={buttonStyles} variant="contained">
-                        Signup
+                  {!isAuth ? (
+                     <>
+                        <li>
+                           <Button onClick={showSignupForm} sx={buttonStyles} variant="contained">
+                              Signup
+                           </Button>
+                        </li>
+                        <li>
+                           <Button onClick={showLoginForm} sx={buttonStyles} variant="outlined">
+                              Login
+                           </Button>
+                        </li>
+                     </>
+                  ) : (
+                     <Button onClick={logoutUser} sx={buttonStyles} variant="outlined">
+                        Logout
                      </Button>
-                  </li>
-                  <li>
-                     <Button sx={buttonStyles} variant="outlined">
-                        Login
-                     </Button>
-                  </li>
+                  )}
                </ul>
             </nav>
          </div>

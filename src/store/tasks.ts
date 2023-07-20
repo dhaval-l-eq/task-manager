@@ -50,21 +50,11 @@ const taskSlice = createSlice({
          const taskToModify = findTask(state.taskList, taskId);
          taskToModify.complete = !taskToModify.complete;
          state.stateChanged = true;
-
-         // if (state.filteredTask) {
-         //    const taskToModify = findTask(state.filteredTask, taskId);
-         //    taskToModify.complete = !taskToModify.complete;
-         // }
       },
       toggleImpState(state, { payload: taskId }) {
          const taskToModify = findTask(state.taskList, taskId);
          taskToModify.imp = !taskToModify.imp;
          state.stateChanged = true;
-
-         // if (state.filteredTask) {
-         //    const taskToModify = findTask(state.filteredTask, taskId);
-         //    taskToModify.imp = !taskToModify.imp;
-         // }
       },
       deleteTask(state, { payload: taskId }) {
          const taskIdx = state.taskList.findIndex(task => task.id === taskId);
