@@ -9,6 +9,8 @@ import { AuthMode, authenticateUser, fetchUserData, sendUserData } from '../../a
 import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch } from 'react-redux';
 import { UserAuthData, authActions } from '../../store/auth';
+import { Task } from '../../interfaces/task';
+import { taskActions } from '../../store/tasks';
 
 interface AuthProps extends ModalProps {
    mode: AuthMode;
@@ -81,7 +83,6 @@ function AuthForm(props: PropsWithChildren<AuthProps>) {
 
       setLoading(true);
 
-      // console.log(userName, password, email);
       const userData = {
          email: email.value,
          password: password.value,
@@ -100,6 +101,7 @@ function AuthForm(props: PropsWithChildren<AuthProps>) {
          } else {
             const data = await fetchUserData(payload.localId, payload.idToken);
             authUserName = data.userName;
+            dispatch(taskActions.setAuthUserTasks(data.tasks));
          }
 
          const authData: UserAuthData = {
@@ -203,7 +205,7 @@ function AuthForm(props: PropsWithChildren<AuthProps>) {
                {loading && <div className={cls.spinner}><CircularProgress  /></div>}
                <div className={cls.actions}>
                   <Button disabled={loading} type="submit" variant="contained" sx={buttonStyles}>
-                     SignUp
+                     {props.mode === 'signup' ? 'SignUp' : 'Login'}
                   </Button>
                   <Button onClick={props.onHide} disabled={loading} variant="outlined" sx={buttonStyles}>
                      Cancel

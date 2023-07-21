@@ -41,32 +41,32 @@ function findTask(taskList: Task[], id: any): Task {
 const taskSlice = createSlice({
    name: 'task',
    initialState: {
-      taskList: dummyTaskList,
-      filteredTask: null as null | Task[],
+      taskList: [] as Task[],
+      filteredTask: [] as Task[],
       stateChanged: false,
    },
    reducers: {
       toggleCompleteState(state, { payload: taskId }) {
-         const taskToModify = findTask(state.taskList, taskId);
+         const taskToModify = findTask(state.taskList!, taskId);
          taskToModify.complete = !taskToModify.complete;
          state.stateChanged = true;
       },
       toggleImpState(state, { payload: taskId }) {
-         const taskToModify = findTask(state.taskList, taskId);
+         const taskToModify = findTask(state.taskList!, taskId);
          taskToModify.imp = !taskToModify.imp;
          state.stateChanged = true;
       },
       deleteTask(state, { payload: taskId }) {
-         const taskIdx = state.taskList.findIndex(task => task.id === taskId);
-         state.taskList.splice(taskIdx, 1);
+         const taskIdx = state.taskList!.findIndex(task => task.id === taskId);
+         state.taskList!.splice(taskIdx, 1);
          state.stateChanged = true;
       },
       addTask(state, { payload }) {
-         state.taskList.push(payload);
+         state.taskList!.push(payload);
          state.stateChanged = true;
       },
       editTask(state, { payload }) {
-         const taskToModify = state.taskList.find(task => task.id === payload.taskId)!;
+         const taskToModify = state.taskList!.find(task => task.id === payload.taskId)!;
          taskToModify.title = payload.title;
          taskToModify.description = payload.description;
          taskToModify.imp = payload.imp;
@@ -76,22 +76,44 @@ const taskSlice = createSlice({
       filterTask(state, { payload }) {
          switch (payload) {
             case 'pending':
-               state.filteredTask = state.taskList.filter(task => !task.complete);
+               state.filteredTask = state.taskList?.filter(task => !task.complete);
                return;
             case 'all':
                state.filteredTask = state.taskList;
                return;
             case 'finished':
-               state.filteredTask = state.taskList.filter(task => task.complete);
+               state.filteredTask = state.taskList?.filter(task => task.complete);
                return;
             case 'important':
-               state.filteredTask = state.taskList.filter(task => task.imp);
+               state.filteredTask = state.taskList?.filter(task => task.imp);
                return;
          }
       },
+      setAuthUserTasks(state, {payload}) {
+
+         if(!payload) return;
+
+         const newTaskList: Task[] = [];
+
+         Object.entries(payload).forEach(([key, value]: [string, any]) => {
+            
+            const task = {
+               id: key,
+               title: value.title,
+               description: value.description,
+               imp: value.imp,
+               color: value.color,
+               complete: value.complete,
+               dateCreated: value.dateCreated
+            };
+            newTaskList.push(task);
+         })
+         state.taskList = newTaskList;
+         state.stateChanged = true;
+      },
       resetStateChange(state) {
          state.stateChanged = false;
-      }
+      },
    },
 });
 

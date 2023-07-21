@@ -10,7 +10,8 @@ import { taskActions } from '../../store/tasks';
 import { Color, Task } from '../../interfaces/task';
 import {v4 as uuid} from 'uuid';
 import { RootState } from '../../store';
-import { sendTask } from '../../api/task';
+import { taskHttpRequest } from '../../api/task';
+import { updateTaskHttpRequest } from '../../api/task';
 
 interface TaskFormProps extends ModalProps {
    edit?: boolean;
@@ -28,18 +29,18 @@ function TaskForm(props: PropsWithChildren<TaskFormProps>) {
 
    const [titleValid, setTitleValid] = useState(true);
 
-   const [inputTitle, setInputTitle] = useState(props.title);
+   const [inputTitle, setInputTitle] = useState(props.title || '');
    const titleChangeHandler = () => {
       setTitleValid(true);
       setInputTitle((titleRef.current! as HTMLInputElement).value);
    }
 
-   const [inputDesc, setInputDesc] = useState(props.description);
+   const [inputDesc, setInputDesc] = useState(props.description || '');
    const descChangeHandler = () => {
       setInputDesc((descRef.current! as HTMLInputElement).value);
    }
 
-   const [inputImp, setInputImp] = useState(props.imp);
+   const [inputImp, setInputImp] = useState(props.imp || false);
    const impChangeHandler = () => {
       setInputImp((impRef.current! as HTMLInputElement).checked);
    }
@@ -58,6 +59,10 @@ function TaskForm(props: PropsWithChildren<TaskFormProps>) {
       setSelectedColor(colorInputEnum);
    }
 
+   async function updateTaskOnServer(payload: any) {
+      if(token && props.id) await updateTaskHttpRequest(props.id.toString(),token,userId,payload);
+   }
+
    async function addTaskHandler(e: FormEvent<HTMLFormElement>) {
       e.preventDefault();
 
@@ -67,13 +72,17 @@ function TaskForm(props: PropsWithChildren<TaskFormProps>) {
       }
 
       if(props.edit) {
-         dispatch(taskActions.editTask({
+
+         const editedTask = {
             taskId: props.id,
             title: inputTitle,
             description: inputDesc,
             color: selectedColor,
             imp: inputImp
-         }))
+         };
+
+         dispatch(taskActions.editTask(editedTask));
+         await updateTaskOnServer(editedTask);
       }
       else {
          let taskId = uuid();
@@ -84,16 +93,16 @@ function TaskForm(props: PropsWithChildren<TaskFormProps>) {
             dateCreated: Date.now(),
             imp: inputImp!,
             complete: false,
-            color: selectedColor
+            color: selectedColor,
+            id: '',
          }
 
          if(token) {
-            const data = await sendTask(newTask, token, userId );
+            const data = await taskHttpRequest(newTask, token, userId, 'send' );
             taskId = data.name;
          }
 
          newTask.id = taskId;
-         console.log(newTask)
 
          dispatch(taskActions.addTask(newTask));
       }

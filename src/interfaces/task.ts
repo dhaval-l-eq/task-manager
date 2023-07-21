@@ -12,12 +12,12 @@ export interface TaskProp {
    imp: boolean;
    complete: boolean;
    dateCreated: string | number;
-   id?: Key;
+   id: Key;
    color?: Color;
 }
 
 export interface Task {
-   id?: Key;
+   id: Key;
    title: string;
    description?: string;
    imp: boolean;

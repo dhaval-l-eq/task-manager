@@ -12,10 +12,12 @@ import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { taskActions } from '../../../store/tasks';
 import DeleteConfirm from '../../task-actions/DeleteConfirm';
 import TaskForm from '../../task-actions/TaskForm';
+import { updateTaskHttpRequest } from '../../../api/task';
+import { RootState } from '../../../store';
 
 function Task(props: PropsWithChildren<TaskProp>) {
    const taskClasses = `${cls.task} ${props.color === Color.C2 && cls.c2} ${props.color === Color.C3 && cls.c3}`;
@@ -35,9 +37,22 @@ function Task(props: PropsWithChildren<TaskProp>) {
 
    const dispatch = useDispatch();
 
-   const toggleTaskComplete = () => dispatch(taskActions.toggleCompleteState(props.id));
+   const token = useSelector((state: RootState) => state.auth.token);
+   const userId = useSelector((state: RootState) => state.auth.userId);
 
-   const toggleTaskImp = () => dispatch(taskActions.toggleImpState(props.id));
+   async function updateTaskOnServer(payload: any) {
+      if(token) await updateTaskHttpRequest(props.id.toString(),token,userId,payload);
+   }
+
+   const toggleTaskComplete = async () => {
+      dispatch(taskActions.toggleCompleteState(props.id));
+      await updateTaskOnServer({complete: !props.complete});
+   };
+
+   const toggleTaskImp = async () => {
+      dispatch(taskActions.toggleImpState(props.id));
+      await updateTaskOnServer({imp: !props.imp});
+   }
 
    const deleteHandler = () => {
       setDelConfimVisible(false);

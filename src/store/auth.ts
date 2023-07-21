@@ -14,7 +14,7 @@ const authSlice = createSlice({
       userName: '',
       token: null,
       expiration: null,
-   },
+   } as UserAuthData,
    reducers: {
       setUser(state, { payload }) {
          state.userId = payload.userId;

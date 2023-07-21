@@ -7,11 +7,6 @@ interface FBBody {
    returnSecureToken: boolean;
 }
 
-// export interface UserData {
-//     userName: string;
-//     taskList: Task;
-// }
-
 export type AuthMode = 'signup' | 'signin';
 
 export async function authenticateUser(userData: FBBody, mode: AuthMode) {
@@ -58,8 +53,6 @@ export async function fetchUserData(userId: string, token: string) {
         if(!response.ok) {
             throw new Error('Something went wrong!');
         }
-
-        console.log(data);
 
         return data;
 
