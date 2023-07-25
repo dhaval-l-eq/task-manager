@@ -25,3 +25,7 @@ export interface Task {
    dateCreated: string | number;
    color?: Color;
 }
+
+export type FilterText = 'pending' | 'finished' | 'all' | 'important';
+
+export type SortText = '' | 'imp' | 'time-asc' | 'time-dsc';

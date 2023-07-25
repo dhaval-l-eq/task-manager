@@ -41,41 +41,55 @@ function Task(props: PropsWithChildren<TaskProp>) {
    const userId = useSelector((state: RootState) => state.auth.userId);
 
    async function updateTaskOnServer(payload: any) {
-      if(token) await updateTaskHttpRequest(props.id.toString(),token,userId,payload);
+      if (token) await updateTaskHttpRequest(props.id.toString(), token, userId, false, payload);
    }
 
    const toggleTaskComplete = async () => {
       dispatch(taskActions.toggleCompleteState(props.id));
-      await updateTaskOnServer({complete: !props.complete});
+      await updateTaskOnServer({ complete: !props.complete });
    };
 
    const toggleTaskImp = async () => {
       dispatch(taskActions.toggleImpState(props.id));
-      await updateTaskOnServer({imp: !props.imp});
-   }
+      await updateTaskOnServer({ imp: !props.imp });
+   };
 
    const deleteHandler = () => {
       setDelConfimVisible(false);
       setTaskDeleted(true);
-      setTimeout(() => dispatch(taskActions.deleteTask(props.id)), 300);
-   }
+      setTimeout(async () => {
+         dispatch(taskActions.deleteTask(props.id))
+         if (token) await updateTaskHttpRequest(props.id.toString(), token, userId, true);
+      }, 300);
+   };
 
    return (
       <>
-         <TaskForm edit title={props.title} description={props.description} imp={props.imp} color={props.color} id={props.id} isVisible={editTaskVisible} onHide={hideEditTask} />
+         <TaskForm
+            edit
+            title={props.title}
+            description={props.description}
+            imp={props.imp}
+            color={props.color}
+            id={props.id}
+            isVisible={editTaskVisible}
+            onHide={hideEditTask}
+         />
          <DeleteConfirm isVisible={delConfimVisible} onHide={hideDelConfirm} onConfirm={deleteHandler} />
          <Card cardId={props.id} isVisible={!taskDeleted}>
             <div className={taskClasses}>
                <div className={cls.header}>
                   <h3>{props.title}</h3>
-                  {props.description && <IconButton
-                     onClick={toggleDesc}
-                     className={`${descVisible && cls.expandBtnRotate}`}
-                     title="show/hide description"
-                     sx={{ padding: 0.6, transition: 'all 0.3s' }}
-                  >
-                     <ExpandMoreIcon sx={{ fontSize: 25 }} />
-                  </IconButton>}
+                  {props.description && (
+                     <IconButton
+                        onClick={toggleDesc}
+                        className={`${descVisible && cls.expandBtnRotate}`}
+                        title="show/hide description"
+                        sx={{ padding: 0.6, transition: 'all 0.3s' }}
+                     >
+                        <ExpandMoreIcon sx={{ fontSize: 25 }} />
+                     </IconButton>
+                  )}
                </div>
                <Collapse in={descVisible}>{props.description && <p className={cls.desc}>{props.description}</p>}</Collapse>
                <div className={cls.info}>

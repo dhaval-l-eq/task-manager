@@ -5,9 +5,9 @@ import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
-import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { taskActions } from '../../../store/tasks';
+import { taskActions } from '../../../store/tasks'
+import { FilterText } from '../../../interfaces/task';
 import { RootState } from '../../../store';
 
 function Filter() {
@@ -19,28 +19,17 @@ function Filter() {
       justifyContent: 'flex-start',
    };
 
-   type Filter = 'pending' | 'finished' | 'all' | 'important';
-   const filterList: Filter[] = ['pending', 'finished', 'all', 'important'];
+   const filterList: FilterText[] = ['pending', 'finished', 'all', 'important'];
 
-   const [currentFilter, setCurrentFilter] = useState<Filter>('all');
+   const currentFilter = useSelector((state: RootState) => state.tasks.filterCriteria);
 
    const dispatch = useDispatch();
 
-   const taskStateChanged = useSelector((state: RootState) => state.tasks.stateChanged);
+   const changeFilterHandler = function(this: FilterText) {
+      dispatch(taskActions.filterTask(this));
+   }
 
-   useEffect(() => {
-      dispatch(taskActions.filterTask(currentFilter));
-   }, [currentFilter])
-
-   useEffect(() => {
-      if (taskStateChanged) {
-         dispatch(taskActions.filterTask(currentFilter));
-         dispatch(taskActions.resetStateChange());
-      }
-   }, [taskStateChanged])
-   
-
-   function FilterIcon(value: Filter) {
+   function FilterIcon(value: FilterText) {
       switch (value) {
          case 'pending':
             return <PendingActionsIcon />;
@@ -63,7 +52,7 @@ function Filter() {
                   sx={{ ...menuBtnStyles, backgroundColor: currentFilter === filter ? '#bdd3ff91' : 'none' }}
                   color="primary"
                   className={cls.btn}
-                  onClick={() => setCurrentFilter(filter)} 
+                  onClick={changeFilterHandler.bind(filter)} 
                >
                   {filter} Tasks
                </Button>
