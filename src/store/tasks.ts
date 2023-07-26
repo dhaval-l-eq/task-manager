@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Color, FilterText, SortText, Task } from '../interfaces/task';
+import { Color, Task } from '../interfaces/task';
 
 const dummyTaskList: Task[] = [
    {
@@ -43,24 +43,27 @@ const taskSlice = createSlice({
    initialState: {
       taskList: [] as Task[],
       filteredTask: [] as Task[],
-      filterCriteria: 'all' as FilterText,
-      sortCriteria: '' as SortText,
+      stateChanged: false,
    },
    reducers: {
       toggleCompleteState(state, { payload: taskId }) {
          const taskToModify = findTask(state.taskList!, taskId);
          taskToModify.complete = !taskToModify.complete;
+         state.stateChanged = true;
       },
       toggleImpState(state, { payload: taskId }) {
          const taskToModify = findTask(state.taskList!, taskId);
          taskToModify.imp = !taskToModify.imp;
+         state.stateChanged = true;
       },
       deleteTask(state, { payload: taskId }) {
          const taskIdx = state.taskList!.findIndex(task => task.id === taskId);
          state.taskList!.splice(taskIdx, 1);
+         state.stateChanged = true;
       },
       addTask(state, { payload }) {
          state.taskList!.push(payload);
+         state.stateChanged = true;
       },
       editTask(state, { payload }) {
          const taskToModify = state.taskList!.find(task => task.id === payload.taskId)!;
@@ -68,19 +71,32 @@ const taskSlice = createSlice({
          taskToModify.description = payload.description;
          taskToModify.imp = payload.imp;
          taskToModify.color = payload.color;
+         state.stateChanged = true;
       },
       filterTask(state, { payload }) {
-         state.filterCriteria = payload;
+         switch (payload) {
+            case 'pending':
+               state.filteredTask = state.taskList?.filter(task => !task.complete);
+               return;
+            case 'all':
+               state.filteredTask = state.taskList;
+               return;
+            case 'finished':
+               state.filteredTask = state.taskList?.filter(task => task.complete);
+               return;
+            case 'important':
+               state.filteredTask = state.taskList?.filter(task => task.imp);
+               return;
+         }
       },
-      sortTask(state, { payload }) {
-         state.sortCriteria = payload;
-      },
-      setAuthUserTasks(state, { payload }) {
-         if (!payload) return;
+      setAuthUserTasks(state, {payload}) {
+
+         if(!payload) return;
 
          const newTaskList: Task[] = [];
 
          Object.entries(payload).forEach(([key, value]: [string, any]) => {
+            
             const task = {
                id: key,
                title: value.title,
@@ -88,12 +104,16 @@ const taskSlice = createSlice({
                imp: value.imp,
                color: value.color,
                complete: value.complete,
-               dateCreated: value.dateCreated,
+               dateCreated: value.dateCreated
             };
             newTaskList.push(task);
-         });
+         })
          state.taskList = newTaskList;
-      }
+         state.stateChanged = true;
+      },
+      resetStateChange(state) {
+         state.stateChanged = false;
+      },
    },
 });
 

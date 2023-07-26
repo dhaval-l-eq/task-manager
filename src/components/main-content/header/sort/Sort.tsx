@@ -1,21 +1,16 @@
 import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import { useState } from 'react';
 import inputStyles from '../../../../mui-customization/inputStyles';
-import { SortText } from '../../../../interfaces/task';
-import { useDispatch } from 'react-redux';
-import { taskActions } from '../../../../store/tasks';
 
 function Sort() {
+   type Sort = '' | 'imp' | 'time-asc' | 'time-dsc';
 
-   const [sortParam, setSortParam] = useState<SortText>('');
-
-   const dispatch = useDispatch();
+   const [sortParam, setSortParam] = useState<Sort>('');
 
    function handleChange(e: SelectChangeEvent) {
       const el = e.target;
-      const sortText = el.value as SortText;
+      const sortText = el.value as Sort;
       setSortParam(sortText);
-      dispatch(taskActions.sortTask(sortText));
    }
 
    return (
