@@ -74,29 +74,54 @@ const taskSlice = createSlice({
          state.stateChanged = true;
       },
       filterTask(state, { payload }) {
-         switch (payload) {
-            case 'pending':
-               state.filteredTask = state.taskList?.filter(task => !task.complete);
-               return;
-            case 'all':
-               state.filteredTask = state.taskList;
-               return;
-            case 'finished':
-               state.filteredTask = state.taskList?.filter(task => task.complete);
-               return;
-            case 'important':
-               state.filteredTask = state.taskList?.filter(task => task.imp);
-               return;
-         }
-      },
-      setAuthUserTasks(state, {payload}) {
+         let taskListToShow: Task[] = [];
 
-         if(!payload) return;
+         if (payload.filter) {
+            switch (payload.filter) {
+               case 'pending':
+                  taskListToShow = state.taskList?.filter(task => !task.complete);
+                  break;
+               case 'all':
+                  taskListToShow = state.taskList;
+                  break;
+               case 'finished':
+                  taskListToShow = state.taskList?.filter(task => task.complete);
+                  break;
+               case 'important':
+                  taskListToShow = state.taskList?.filter(task => task.imp);
+                  break;
+            }
+
+            console.log(taskListToShow)
+         }
+
+         if (payload.sort !== null) {
+            const taskListToSort = payload.filter ? taskListToShow : state.taskList;
+
+            switch (payload.sort) {
+               case 'imp':
+                  taskListToShow = taskListToSort.slice().sort((a, b) => +b.imp - +a.imp);
+                  break;
+               case 'time-asc':
+                  taskListToShow = taskListToSort.slice().sort((a, b) => +a.dateCreated - +b.dateCreated);
+                  break;
+               case 'time-dsc':
+                  taskListToShow = taskListToSort.slice().sort((a, b) => +b.dateCreated - +a.dateCreated);
+                  break;
+               default:
+                  taskListToShow = taskListToSort;
+            }
+         }
+
+         state.filteredTask = taskListToShow;
+
+      },
+      setAuthUserTasks(state, { payload }) {
+         if (!payload) return;
 
          const newTaskList: Task[] = [];
 
          Object.entries(payload).forEach(([key, value]: [string, any]) => {
-            
             const task = {
                id: key,
                title: value.title,
@@ -104,10 +129,10 @@ const taskSlice = createSlice({
                imp: value.imp,
                color: value.color,
                complete: value.complete,
-               dateCreated: value.dateCreated
+               dateCreated: value.dateCreated,
             };
             newTaskList.push(task);
-         })
+         });
          state.taskList = newTaskList;
          state.stateChanged = true;
       },

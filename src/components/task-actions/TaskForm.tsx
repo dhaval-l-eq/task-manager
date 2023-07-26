@@ -60,7 +60,7 @@ function TaskForm(props: PropsWithChildren<TaskFormProps>) {
    }
 
    async function updateTaskOnServer(payload: any) {
-      if(token && props.id) await updateTaskHttpRequest(props.id.toString(),token,userId,payload);
+      if(token && props.id) await updateTaskHttpRequest(props.id.toString(),token,userId,false,payload);
    }
 
    async function addTaskHandler(e: FormEvent<HTMLFormElement>) {

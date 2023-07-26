@@ -41,7 +41,7 @@ function Task(props: PropsWithChildren<TaskProp>) {
    const userId = useSelector((state: RootState) => state.auth.userId);
 
    async function updateTaskOnServer(payload: any) {
-      if(token) await updateTaskHttpRequest(props.id.toString(),token,userId,payload);
+      if(token) await updateTaskHttpRequest(props.id.toString(),token,userId,false,payload);
    }
 
    const toggleTaskComplete = async () => {
@@ -57,7 +57,10 @@ function Task(props: PropsWithChildren<TaskProp>) {
    const deleteHandler = () => {
       setDelConfimVisible(false);
       setTaskDeleted(true);
-      setTimeout(() => dispatch(taskActions.deleteTask(props.id)), 300);
+      setTimeout(async () => {
+         dispatch(taskActions.deleteTask(props.id))
+         if(token) await updateTaskHttpRequest(props.id.toString(),token,userId,true);
+      }, 300);
    }
 
    return (

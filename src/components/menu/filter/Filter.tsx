@@ -29,12 +29,12 @@ function Filter() {
    const taskStateChanged = useSelector((state: RootState) => state.tasks.stateChanged);
 
    useEffect(() => {
-      dispatch(taskActions.filterTask(currentFilter));
+      dispatch(taskActions.filterTask({filter: currentFilter, sort: null}));
    }, [currentFilter])
 
    useEffect(() => {
       if (taskStateChanged) {
-         dispatch(taskActions.filterTask(currentFilter));
+         dispatch(taskActions.filterTask({filter: currentFilter, sort: null}));
          dispatch(taskActions.resetStateChange());
       }
    }, [taskStateChanged])

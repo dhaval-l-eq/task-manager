@@ -1,6 +1,6 @@
 import cls from './Header.module.css';
 
-import Search from './search/Search';
+// import Search from './search/Search';
 import Sort from './sort/Sort';
 
 function Header() {
@@ -8,7 +8,7 @@ function Header() {
 
    return (
       <div className={cls.wrapper}>
-         <Search />
+         {/* <Search /> */}
          <Sort />
       </div>
    );
