@@ -6,9 +6,3 @@
     font-size: 1.8rem;
     font-weight: 400;
 }
-
-.mobileAddTaskBtn {
-    position: fixed !important;
-    bottom: 3rem;
-    right: 3rem;
-}
