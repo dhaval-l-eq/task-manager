@@ -2,3 +2,12 @@
     padding-top: 8.2rem;
     padding-left: 25rem;
 }
+
+
+
+@media (max-width: 700px) {
+    .mainWrapper {
+        padding-left: 0;
+        padding-top: 4.5rem;
+    }
+}

@@ -8,3 +8,17 @@
     padding-top: 10rem;
     min-width: 25rem;
 }
+
+.mobileMenu {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    .mobileMenu {
+        display: block;
+    }
+
+    .menu {
+        display: none;
+    }
+}

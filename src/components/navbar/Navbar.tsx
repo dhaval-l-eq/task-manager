@@ -51,7 +51,7 @@ function Navbar() {
                      <PersonIcon sx={{ fontSize: 30 }} color="info" />
                   </li>
                   <li>
-                     <h2>Hi, {userName.length > 0 ? userName : 'Guest'}!</h2>
+                     <h2 className={cls.userName}>Hi, {userName.length > 0 ? userName : 'Guest'}!</h2>
                   </li>
                   {!isAuth ? (
                      <>

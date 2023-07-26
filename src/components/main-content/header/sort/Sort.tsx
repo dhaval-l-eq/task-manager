@@ -19,7 +19,7 @@ function Sort() {
    }
 
    return (
-      <FormControl size='small' color="warning" sx={{ minWidth: 300 }}>
+      <FormControl size='small' color="warning" sx={{ minWidth: 220 }}>
          <InputLabel sx={inputStyles} id="sort">
             Sort by
          </InputLabel>

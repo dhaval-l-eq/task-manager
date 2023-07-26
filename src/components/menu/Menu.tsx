@@ -5,11 +5,16 @@ import Filter from './filter/Filter';
 
 function Menu() {
    return (
+      <>
       <aside className={cls.menu}>
          <AddTask />
          <Filter />
          <Clock />
       </aside>
+      <div className={cls.mobileMenu}>
+         <AddTask mobile />
+      </div>
+      </>
    );
 }
 export default Menu;
