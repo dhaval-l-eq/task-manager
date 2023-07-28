@@ -5,12 +5,16 @@ import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, PropsWithChildren } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { taskActions } from '../../../store/tasks';
 import { RootState } from '../../../store';
 
-function Filter() {
+interface FilterProps {
+   className?: string | undefined;
+}
+
+function Filter(props: PropsWithChildren<FilterProps>) {
    const menuBtnStyles = {
       ...buttonStyles,
       py: 1.3,
@@ -54,7 +58,7 @@ function Filter() {
    }
 
    return (
-      <ul className={cls.filter}>
+      <ul className={`${cls.filter} ${props.className}`}>
          {filterList.map(filter => (
             <li key={filter}>
                <Button

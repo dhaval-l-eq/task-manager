@@ -1,15 +1,28 @@
 .btn {
-    position: fixed;
-    bottom: 3rem;
-    right: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 5rem;
-    height: 5rem;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.46);
-    background-color: var(--color-secondary-100);
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 200;
+   position: fixed;
+   bottom: 3rem;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 5rem;
+   height: 5rem;
+   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.46);
+   border-radius: 50%;
+   cursor: pointer;
+   z-index: 80;
+}
+
+.btn--right {
+   right: 3rem;
+   background-color: var(--color-secondary-100);
+}
+.btn--left {
+   left: 3rem;
+   background-color: var(--color-secondary-200);
+}
+
+@media (min-width: 701px) {
+   .btn {
+      display: none;
+   }
 }

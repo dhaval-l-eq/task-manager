@@ -32,7 +32,7 @@ function AddTask(props: PropsWithChildren<AddTaskProps>) {
                   Add Task
                </Button>
             ) : (
-               <MobileButton onClick={showAddTask}>
+               <MobileButton position='right' onClick={showAddTask}>
                   <AddTaskIcon fontSize='large'/>
                </MobileButton>
             )}
