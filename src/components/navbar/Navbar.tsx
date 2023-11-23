@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { authActions } from '../../store/auth';
 import { AuthMode } from '../../api/auth';
+import { taskActions } from '../../store/tasks';
 
 function Navbar() {
    const [authFormVisible, setAuthFormVisible] = useState(false);
@@ -33,6 +34,7 @@ function Navbar() {
 
    function logoutUser() {
       dispatch(authActions.logoutUser());
+      dispatch(taskActions.clearTaskList());
    }
 
    return (

@@ -91,8 +91,6 @@ const taskSlice = createSlice({
                   taskListToShow = state.taskList?.filter(task => task.imp);
                   break;
             }
-
-            console.log(taskListToShow)
          }
 
          if (payload.sort !== null) {
@@ -134,11 +132,16 @@ const taskSlice = createSlice({
             newTaskList.push(task);
          });
          state.taskList = newTaskList;
+         state.filteredTask = newTaskList;
          state.stateChanged = true;
       },
       resetStateChange(state) {
          state.stateChanged = false;
       },
+      clearTaskList(state) {
+         state.taskList = [];
+         state.filteredTask = [];
+      }
    },
 });
 

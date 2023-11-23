@@ -9,7 +9,6 @@ import { AuthMode, authenticateUser, fetchUserData, sendUserData } from '../../a
 import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch } from 'react-redux';
 import { UserAuthData, authActions } from '../../store/auth';
-import { Task } from '../../interfaces/task';
 import { taskActions } from '../../store/tasks';
 
 interface AuthProps extends ModalProps {

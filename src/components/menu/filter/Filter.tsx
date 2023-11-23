@@ -30,18 +30,19 @@ function Filter(props: PropsWithChildren<FilterProps>) {
 
    const dispatch = useDispatch();
 
-   const taskStateChanged = useSelector((state: RootState) => state.tasks.stateChanged);
+   // const taskStateChanged = useSelector((state: RootState) => state.tasks.stateChanged);
 
    useEffect(() => {
       dispatch(taskActions.filterTask({filter: currentFilter, sort: null}));
    }, [currentFilter])
 
-   useEffect(() => {
-      if (taskStateChanged) {
-         dispatch(taskActions.filterTask({filter: currentFilter, sort: null}));
-         dispatch(taskActions.resetStateChange());
-      }
-   }, [taskStateChanged])
+   // useEffect(() => {
+   //    if (taskStateChanged) {
+   //       console.log(currentFilter);
+   //       dispatch(taskActions.filterTask({filter: currentFilter, sort: null}));
+   //       dispatch(taskActions.resetStateChange());
+   //    }
+   // }, [taskStateChanged])
    
 
    function FilterIcon(value: Filter) {

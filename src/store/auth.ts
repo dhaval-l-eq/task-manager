@@ -10,10 +10,10 @@ export interface UserAuthData {
 const authSlice = createSlice({
    name: 'auth',
    initialState: {
-      userId: '',
-      userName: '',
-      token: null,
-      expiration: null,
+      userId: localStorage.getItem('userId') || '',
+      userName: localStorage.getItem('userName') || '',
+      token: localStorage.getItem('token') || null,
+      expiration: localStorage.getItem('expiration') || null,
    } as UserAuthData,
    reducers: {
       setUser(state, { payload }) {
@@ -21,12 +21,21 @@ const authSlice = createSlice({
          state.userName = payload.userName;
          state.token = payload.token;
          state.expiration = payload.expiration;
+
+         // set local storage
+         localStorage.setItem('userId', payload.userId);
+         localStorage.setItem('userName', payload.userName);
+         localStorage.setItem('token', payload.token);
+         localStorage.setItem('expiration', payload.expiration);
       },
       logoutUser(state) {
          state.userId = '';
          state.userName = '';
          state.token = null;
          state.expiration = null;
+
+         // remove local storage data
+         localStorage.clear();
       },
    },
 });

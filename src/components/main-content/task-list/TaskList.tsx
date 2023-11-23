@@ -7,7 +7,6 @@ import Grid from '@mui/material/Grid';
 import { useSelector } from 'react-redux';
 import TaskForm from '../../task-actions/TaskForm';
 import { Task as TaskInterface } from '../../../interfaces/task';
-import { AnimatePresence, motion } from 'framer-motion';
 
 function TaskList() {
    const allTaskList = useSelector((state: RootState) => state.tasks.taskList);
@@ -39,7 +38,8 @@ function TaskList() {
          <div className={cls.wrapper}>
             {allTaskList.length === 0 && <h2 className={cls.fallback}>No Task to show! Please add some task...</h2>}
             <Grid container spacing={2}>
-               {filteredTasks ? RenderTaskList(filteredTasks) : RenderTaskList(allTaskList)}
+               {RenderTaskList(filteredTasks)}
+               {/* {filteredTasks?.length > 0 ? RenderTaskList(filteredTasks) : RenderTaskList(allTaskList)} */}
                <Grid className='w100' item xl={3} lg={4} md={6}>
                   <Card cardId='add-task-btn' isVisible button>
                      <div onClick={showAddTask} className={cls.addTask}>

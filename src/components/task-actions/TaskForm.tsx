@@ -1,4 +1,4 @@
-import { FormEvent, PropsWithChildren, useRef, useState, FocusEvent, SyntheticEvent, Key, ChangeEvent } from 'react';
+import { FormEvent, PropsWithChildren, useRef, useState, FocusEvent, SyntheticEvent, Key } from 'react';
 import Box from '../../Layout/Box';
 import Modal from '../../Layout/Modal';
 import cls from '../form-css/Form.module.css';
@@ -86,7 +86,6 @@ function TaskForm(props: PropsWithChildren<TaskFormProps>) {
       }
       else {
          let taskId = uuid();
-
          const newTask: Task = {
             title: inputTitle!,
             description: inputDesc,
@@ -103,7 +102,6 @@ function TaskForm(props: PropsWithChildren<TaskFormProps>) {
          }
 
          newTask.id = taskId;
-
          dispatch(taskActions.addTask(newTask));
       }
 
@@ -114,7 +112,6 @@ function TaskForm(props: PropsWithChildren<TaskFormProps>) {
 
       props.onHide();
    }
-
    
    const checkTitleValidity = (e: FocusEvent<HTMLInputElement>) => {
       if(e.target.value.length === 0) setTitleValid(false);
