@@ -15,3 +15,12 @@
    transform: translate(-50%, -50%);
    z-index: 200;
 }
+
+@media screen and (max-width: 700px) {
+   .modal {
+      bottom: 0;
+      transform: translateX(-50%) !important;
+      top: unset;
+      max-width: 100%;
+   }
+}

@@ -208,3 +208,23 @@
    --s: 12px;
    --b: var(--dot);
 }
+
+@media screen and (max-width: 700px) {
+   .form, .formSmall {
+      max-width: 100%;
+   }
+
+   .actions {
+      width: 90%;
+      max-width: 280px;
+   }
+
+   .formControl textarea {
+      resize: none;
+   }
+
+   .formGroup label {
+      width: 30px;
+      height: 30px;
+   }
+}

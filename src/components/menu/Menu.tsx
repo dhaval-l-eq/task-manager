@@ -6,6 +6,8 @@ import MobileButton from '../../Layout/MobileButton';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import { useState } from 'react';
 
+const windowWidth = window.innerWidth;
+
 function Menu() {
    const [filterVisible, setFilterVisible] = useState(false);
 
@@ -14,20 +16,21 @@ function Menu() {
 
    return (
       <>
-         <aside className={cls.menu}>
-            <AddTask />
-            <Filter />
-            <Clock />
-         </aside>
+         {windowWidth > 700 ? (
+            <aside className={cls.menu}>
+               <AddTask />
+               <Filter />
+               <Clock />
+            </aside>
+         ) : (
+            <div onClick={hideFilter} className={`${!filterVisible && cls.filterHidden} ${cls.mobileMenu}`}>
+               <div className={cls.filterWrapper}><Filter /></div>
+            </div>
+         )}
          <AddTask mobile />
          <MobileButton onClick={showFilter} position="left">
             <FilterAltOutlinedIcon fontSize="large" />
          </MobileButton>
-         <div onClick={hideFilter} className={`${!filterVisible && cls.filterHidden} ${cls.mobileMenu}`}>
-            <div className={cls.filterWrapper}>
-               <Filter />
-            </div>
-         </div>
       </>
    );
 }

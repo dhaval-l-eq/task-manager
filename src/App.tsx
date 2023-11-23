@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { taskActions } from './store/tasks';
 import { fetchUserData } from './api/auth';
 import { RootState } from './store';
+import { authActions } from './store/auth';
+import Creator from './components/creator-info/Creator';
 
 function App() {
    const dispatch = useDispatch();
@@ -20,8 +22,12 @@ function App() {
 
    async function tryLogin() {
       if (authData.token) {
-         const data = await fetchUserData(authData.userId, authData.token);
-         dispatch(taskActions.setAuthUserTasks(data.tasks));
+         try {
+            const data = await fetchUserData(authData.userId, authData.token);
+            dispatch(taskActions.setAuthUserTasks(data.tasks));
+         } catch (error) {
+            dispatch(authActions.logoutUser());
+         }
       }
    }
 
@@ -30,6 +36,7 @@ function App() {
          <Navbar />
          <Menu />
          <MainContent />
+         <Creator />
       </ThemeProvider>
    );
 }

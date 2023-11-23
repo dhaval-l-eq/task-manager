@@ -23,29 +23,31 @@ function Filter(props: PropsWithChildren<FilterProps>) {
       justifyContent: 'flex-start',
    };
 
-   type Filter = 'pending' | 'finished' | 'all' | 'important';
-   const filterList: Filter[] = ['pending', 'finished', 'all', 'important'];
+   type FilterEnum = 'pending' | 'finished' | 'all' | 'important';
+   const filterList: FilterEnum[] = ['pending', 'finished', 'all', 'important'];
 
-   const [currentFilter, setCurrentFilter] = useState<Filter>('all');
+   const [currentFilter, setCurrentFilter] = useState<FilterEnum>('all');
+
+   console.log(currentFilter, 'outer filter value...');
 
    const dispatch = useDispatch();
 
-   // const taskStateChanged = useSelector((state: RootState) => state.tasks.stateChanged);
+   const taskStateChanged = useSelector((state: RootState) => state.tasks.stateChanged);
 
    useEffect(() => {
       dispatch(taskActions.filterTask({filter: currentFilter, sort: null}));
    }, [currentFilter])
 
-   // useEffect(() => {
-   //    if (taskStateChanged) {
-   //       console.log(currentFilter);
-   //       dispatch(taskActions.filterTask({filter: currentFilter, sort: null}));
-   //       dispatch(taskActions.resetStateChange());
-   //    }
-   // }, [taskStateChanged])
+   useEffect(() => {
+      if (taskStateChanged) {
+         console.log(currentFilter);
+         dispatch(taskActions.filterTask({filter: currentFilter, sort: null}));
+         dispatch(taskActions.resetStateChange());
+      }
+   }, [taskStateChanged])
    
 
-   function FilterIcon(value: Filter) {
+   function FilterIcon(value: FilterEnum) {
       switch (value) {
          case 'pending':
             return <PendingActionsIcon />;

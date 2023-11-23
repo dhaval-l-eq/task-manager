@@ -1,0 +1,20 @@
+.creator {
+   position: absolute;
+   bottom: 20px;
+   right: 20px;
+}
+
+.creator p {
+   font-size: 12px;
+   font-weight: 400;
+}
+
+@media screen and (max-width: 700px) {
+   .creator {
+      bottom: 8px;
+   }
+
+   .creator p {
+      font-size: 10px;
+   }
+}
