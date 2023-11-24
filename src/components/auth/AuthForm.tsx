@@ -90,7 +90,6 @@ function AuthForm(props: PropsWithChildren<AuthProps>) {
 
       try {
          const payload = await authenticateUser(userData, props.mode);
-         console.log(payload);
 
          let authUserName;
 

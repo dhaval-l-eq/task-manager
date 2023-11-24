@@ -28,8 +28,6 @@ function Filter(props: PropsWithChildren<FilterProps>) {
 
    const [currentFilter, setCurrentFilter] = useState<FilterEnum>('all');
 
-   console.log(currentFilter, 'outer filter value...');
-
    const dispatch = useDispatch();
 
    const taskStateChanged = useSelector((state: RootState) => state.tasks.stateChanged);
@@ -40,7 +38,6 @@ function Filter(props: PropsWithChildren<FilterProps>) {
 
    useEffect(() => {
       if (taskStateChanged) {
-         console.log(currentFilter);
          dispatch(taskActions.filterTask({filter: currentFilter, sort: null}));
          dispatch(taskActions.resetStateChange());
       }

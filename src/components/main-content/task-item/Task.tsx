@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, useRef, useState } from 'react';
 import Card from '../../../Layout/Card';
 import cls from './Task.module.css';
 import { Color, TaskProp } from '../../../interfaces/task';
@@ -19,11 +19,17 @@ import TaskForm from '../../task-actions/TaskForm';
 import { updateTaskHttpRequest } from '../../../api/task';
 import { RootState } from '../../../store';
 
+interface TaskFormRef {
+   parentImpChangeHandler: () => void;
+ }
+
 function Task(props: PropsWithChildren<TaskProp>) {
    const taskClasses = `${cls.task} ${props.color === Color.C2 && cls.c2} ${props.color === Color.C3 && cls.c3}`;
 
    const [descVisible, setDescVisible] = useState(false);
    const toggleDesc = () => setDescVisible(prev => !prev);
+
+   const taskFormRef = useRef<TaskFormRef>();
 
    const [taskDeleted, setTaskDeleted] = useState(false);
 
@@ -51,6 +57,7 @@ function Task(props: PropsWithChildren<TaskProp>) {
 
    const toggleTaskImp = async () => {
       dispatch(taskActions.toggleImpState(props.id));
+      taskFormRef.current?.parentImpChangeHandler();
       await updateTaskOnServer({imp: !props.imp});
    }
 
@@ -65,7 +72,7 @@ function Task(props: PropsWithChildren<TaskProp>) {
 
    return (
       <>
-         <TaskForm edit title={props.title} description={props.description} imp={props.imp} color={props.color} id={props.id} isVisible={editTaskVisible} onHide={hideEditTask} />
+         <TaskForm ref={taskFormRef} edit title={props.title} description={props.description} imp={props.imp} color={props.color} id={props.id} isVisible={editTaskVisible} onHide={hideEditTask} />
          <DeleteConfirm isVisible={delConfimVisible} onHide={hideDelConfirm} onConfirm={deleteHandler} />
          <Card cardId={props.id} isVisible={!taskDeleted}>
             <div className={taskClasses}>

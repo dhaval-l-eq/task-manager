@@ -1,4 +1,4 @@
-import { FormEvent, PropsWithChildren, useRef, useState, FocusEvent, SyntheticEvent, Key } from 'react';
+import { FormEvent, PropsWithChildren, useRef, useState, FocusEvent, SyntheticEvent, Key, forwardRef, useImperativeHandle } from 'react';
 import Box from '../../Layout/Box';
 import Modal from '../../Layout/Modal';
 import cls from '../form-css/Form.module.css';
@@ -22,10 +22,17 @@ interface TaskFormProps extends ModalProps {
    id?: Key;
 }
 
-function TaskForm(props: PropsWithChildren<TaskFormProps>) {
+const TaskForm = forwardRef(function (props: PropsWithChildren<TaskFormProps>, ref) {
+
    const titleRef = useRef(null);
    const descRef = useRef(null);
    const impRef = useRef(null);
+
+   useImperativeHandle(ref, () => ({
+      parentImpChangeHandler() {
+         setInputImp(prev => !prev);
+      }
+   }))
 
    const [titleValid, setTitleValid] = useState(true);
 
@@ -105,10 +112,12 @@ function TaskForm(props: PropsWithChildren<TaskFormProps>) {
          dispatch(taskActions.addTask(newTask));
       }
 
-      setInputTitle('');
-      setInputDesc('');
-      setInputImp(false);
-      setSelectedColor(Color.C1);
+      if(!props.edit) {
+         setInputTitle('');
+         setInputDesc('');
+         setInputImp(false);
+         setSelectedColor(Color.C1);
+      }
 
       props.onHide();
    }
@@ -168,5 +177,5 @@ function TaskForm(props: PropsWithChildren<TaskFormProps>) {
          </Box>
       </Modal>
    );
-}
+})
 export default TaskForm;
